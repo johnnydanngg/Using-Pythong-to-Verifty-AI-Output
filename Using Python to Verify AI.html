@@ -1,0 +1,495 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "bf7f9479-6da4-4700-9692-06b59e16487f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "data2025=pd.read_csv(\"2025.csv\",encoding=\"utf-8\")\n",
+    "data2026=pd.read_csv(\"2026PartYear.csv\",encoding=\"utf-8\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "9db7a4e1-0fbd-4fcc-bef3-e357ea012d13",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data2025 = data2025[data2025[\"Period\"] <= 32]\n",
+    "data2026 = data2026[data2026[\"Period\"] <= 32]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "bc617c5e-3c83-40db-8609-349e72d0aebf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "us2025 = data2025[data2025[\"Geography\"] == \"Total U.S.\"]\n",
+    "us2026 = data2026[data2026[\"Geography\"] == \"Total U.S.\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "id": "920c248d-de27-497e-9e1b-c1d7b390dd34",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.76"
+      ]
+     },
+     "execution_count": 61,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Conventional Total Volume in 2025\n",
+    "con2025 = us2025[us2025[\"Type\"] == \"Conventional\"]\n",
+    "\n",
+    "round(float(con2025[\"Total Bulk and Bags\"].sum() / 1_000_000_000), 2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "id": "07b5dada-91d5-452c-bcac-dc7ef3c2c343",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2.02"
+      ]
+     },
+     "execution_count": 60,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Conventional Total Volume in 2026\n",
+    "con2026 = us2026[us2026[\"Type\"] == \"Conventional\"]\n",
+    "\n",
+    "round(float(con2026[\"Total Bulk and Bags\"].sum() / 1_000_000_000), 2)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 59,
+   "id": "08c9b020-3925-471f-b85e-509a04278ce4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.22"
+      ]
+     },
+     "execution_count": 59,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Conventional ASP in 2025\n",
+    "con_asp2025 = (con2025[\"ASP Current Year\"] * con2025[\"Total Bulk and Bags\"]).sum() / con2025[\"Total Bulk and Bags\"].sum()\n",
+    "\n",
+    "float(round(con_asp2025, 2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "id": "de2a6b78-4f21-440d-aaec-83f4aa0b1c46",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.98"
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Conventional ASP in 2026\n",
+    "con_asp2026 = (con2026[\"ASP Current Year\"] * con2026[\"Total Bulk and Bags\"]).sum() / con2026[\"Total Bulk and Bags\"].sum()\n",
+    "\n",
+    "float(round(con_asp2026, 2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "id": "d597321c-1e93-439d-b2a6-926289c81500",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "105.9"
+      ]
+     },
+     "execution_count": 62,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Organic Total Volume Sold in 2025\n",
+    "org2025 = us2025[us2025[\"Type\"] == \"Organic\"]\n",
+    "\n",
+    "round(float(org2025[\"Total Bulk and Bags\"].sum() / 1_000_000), 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "id": "c8d9adb0-3c7f-45e0-948c-b5c8130cfe71",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "105.1"
+      ]
+     },
+     "execution_count": 63,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Organic Total Volume Sold in 2026\n",
+    "org2026 = us2026[us2026[\"Type\"] == \"Organic\"]\n",
+    "\n",
+    "round(float(org2026[\"Total Bulk and Bags\"].sum() / 1_000_000), 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "id": "8e1a3881-5d28-4a8a-abc5-b05143315026",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.74"
+      ]
+     },
+     "execution_count": 64,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Organic ASP in 2025\n",
+    "org_asp2025 = (org2025[\"ASP Current Year\"] * org2025[\"Total Bulk and Bags\"]).sum() / org2025[\"Total Bulk and Bags\"].sum()\n",
+    "\n",
+    "float(round(org_asp2025, 2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 65,
+   "id": "667d5e4f-5c50-4375-b3fb-046d44db81a4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1.56"
+      ]
+     },
+     "execution_count": 65,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Organic ASP in 2026\n",
+    "org_asp2026 = (org2026[\"ASP Current Year\"] * org2026[\"Total Bulk and Bags\"]).sum() / org2026[\"Total Bulk and Bags\"].sum()\n",
+    "\n",
+    "float(round(org_asp2026, 2))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 136,
+   "id": "c07af4ea-5f14-4fc3-87da-20f6b14847f8",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.145"
+      ]
+     },
+     "execution_count": 136,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Change in Conventional Volume\n",
+    "\n",
+    "round((float(con2026[\"Total Bulk and Bags\"].sum() / 1_000_000_000)) / (float(con2025[\"Total Bulk and Bags\"].sum() / 1_000_000_000)) - 1, 3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 137,
+   "id": "e346c99b-44c6-4ed9-afb6-311aac1b7ff4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.194"
+      ]
+     },
+     "execution_count": 137,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Change in Conventional Avg Price\n",
+    "\n",
+    "round(float(con_asp2026) / float(con_asp2025) - 1, 3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 138,
+   "id": "5448d106-8f7c-4879-8262-07b09d4bfc3e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-0.7"
+      ]
+     },
+     "execution_count": 138,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Change in Organic Volume\n",
+    "\n",
+    "round(((float(org2026[\"Total Bulk and Bags\"].sum()) / (float(org2025[\"Total Bulk and Bags\"].sum()))) - 1) * 100, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 139,
+   "id": "65ce4184-27d2-40d1-8ef6-88ff8dab5d1f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "-10.3"
+      ]
+     },
+     "execution_count": 139,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Change in Organic ASP\n",
+    "\n",
+    "round((float(round(org_asp2026, 2)) / float(round(org_asp2025, 2)) - 1) * 100, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 140,
+   "id": "e9ba7138-d924-456a-bf0b-3aee43da2752",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "5.7"
+      ]
+     },
+     "execution_count": 140,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Organic Share of Volume in 2025\n",
+    "\n",
+    "round((float(org2025[\"Total Bulk and Bags\"].sum())) / ((float(org2025[\"Total Bulk and Bags\"].sum()) + (float(con2025[\"Total Bulk and Bags\"].sum())))) * 100, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 141,
+   "id": "c258c0a4-e954-40fd-8c89-14bdcc36fdbb",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4.9"
+      ]
+     },
+     "execution_count": 141,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Organic Share of Volume in 2026\n",
+    "\n",
+    "round((float(org2026[\"Total Bulk and Bags\"].sum())) / ((float(org2026[\"Total Bulk and Bags\"].sum()) + (float(con2026[\"Total Bulk and Bags\"].sum())))) * 100, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 142,
+   "id": "3f2dd4fb-adbc-4642-8a3f-2a453fccead8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Organic Share or Volume Change\n",
+    "\n",
+    "# 4.9 - 5.7 = -0.8 pts (rounding error)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 135,
+   "id": "c5a871e5-250f-49d2-996f-ce2d1bc49432",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "76.0"
+      ]
+     },
+     "execution_count": 135,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Peak Week\n",
+    "\n",
+    "peak_week = janmay2026.loc[janmay2026[\"Total Bulk and Bags\"].idxmax()]\n",
+    "\n",
+    "round(float(peak_week[\"Total Bulk and Bags\"]) / 1_000_000, 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 134,
+   "id": "966a95fd-fd24-49b5-935b-8270188375c5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.413"
+      ]
+     },
+     "execution_count": 134,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Bagged Share\n",
+    "\n",
+    "round(float((con2026[\"TotalBagged\"].sum()) / con2026[\"Total Bulk and Bags\"].sum()), 3)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 143,
+   "id": "c9c67dbb-f225-41d9-89b1-0384d2f65334",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(10.6, 12.8)"
+      ]
+     },
+     "execution_count": 143,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Larger Fruit Share\n",
+    "\n",
+    "round(float(con2025[\"4225\"].sum() / con2025[\"Total Bulk and Bags\"].sum() * 100), 1), round(float(con2026[\"4225\"].sum() / con2026[\"Total Bulk and Bags\"].sum() * 100), 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 133,
+   "id": "5e847f5b-66a4-42f6-8591-1bc005603dc0",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(48.5, 43.5)"
+      ]
+     },
+     "execution_count": 133,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Smaller Fruit Share\n",
+    "\n",
+    "round(float(con2025[\"4046\"].sum() / con2025[\"Total Bulk and Bags\"].sum() * 100), 1), round(float(con2026[\"4046\"].sum() / con2026[\"Total Bulk and Bags\"].sum() * 100), 1)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.14.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
